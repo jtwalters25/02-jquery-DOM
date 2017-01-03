@@ -17,23 +17,23 @@ function Article (options) {
 
 Article.prototype.toHtml = function() {
   var $newArticle = $('article.template').clone();
-  $newArticle.attr('data-category', this.category);
-  $newArticle.attr('data-author', this.author);
-  $newArticle.attr('data-authorUrl', this.authorUrl);
-  $newArticle.attr('data-title', this.title);
-  $newArticle.attr('data-body', this.body);
-  $newArticle.attr('data-publishedOn', this.publishedOn);
+  $newArticle.attr('category', this.category);
+  // $newArticle.find('address').html(this.author);
+  $newArticle.find('address a').html(this.author).attr('href', this.authorUrl);
+  $newArticle.find('h1').html(this.title);
+  $newArticle.find('.article-body').html(this.body);
+  $newArticle.attr('publishedOn', this.publishedOn);
   /* DONE: We also need to fill in:
   1. author name
   2. author url
   3. article title
-  4. article body
+  4. article bodys
   5. publication*/
   $newArticle.find('time[pubdate]').attr('title', this.publishedOn);
   $newArticle.find('time').text('about ' + parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000) + ' days ago');
-  /* TODO: This cloned article is no longer a template, as it now
+  /* DONE: This cloned article is no longer a template, as it now
   has real data attached to it. Remove class from this new article! */
-  // $newArticle.removeClass('template');
+  $newArticle.removeClass('template');
   return $newArticle;
 };
 
